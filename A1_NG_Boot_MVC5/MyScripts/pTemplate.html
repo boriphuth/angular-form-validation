@@ -1,0 +1,177 @@
+﻿<form class="form-horizontal" name="personForm" novalidate role="form">
+    <!--novalidate: Browser doest not valid from itself-->
+    <fieldset>
+        <legend>Person Basic Info</legend>
+        <div class="form-group">
+           
+            <label for="personId" class="col-sm-3 control-label">Person Id</label>
+            <div class="col-sm-9">
+                <input type="text" id="personId" name="personId"
+                       ng-model="PersonId" class="form-control" readonly="readonly" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title" class="col-sm-3 control-label">Person Id</label>
+            <div class="col-sm-9">
+                <select id="title" name="title" class="form-control"
+                        ng-model="selectedtitle"
+                        ng-options="t for t in title"></select>
+            </div>
+        </div>  
+            
+        <div class="form-group" ng-class="{'has-error':personForm.firstName.$invalid && personForm.firstName.$dirty}">
+            <label for="firstName" class="col-sm-3 control-label">First Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="firstName" name="firstName"
+                       ng-model="FirstName" class="form-control" ng-required="true" 
+                      ng-maxlength="20" ng-pattern="/^[A-Z]/"/>
+                <span class="help-block" ng-if="personForm.firstName.$error.required && personForm.firstName.$dirty">First Name is Must</span>
+                <span class="help-block" ng-if="personForm.firstName.$error.pattern">Must start from Capital letter</span>
+                <span class="help-block" ng-if="personForm.firstName.$error.maxlength">Must be less than 20 letters</span>
+            </div>
+        </div>
+            
+        <div class="form-group" ng-class="{'has-error':personForm.middleName.$invalid && personForm.middleName.$dirty}">
+            <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="middleName" name="middleName"
+                       ng-model="MiddleName" class="form-control" ng-required="true"
+                       ng-maxlength="20" ng-pattern="/^[A-Z]/" />
+                <span class="help-block" ng-if="personForm.middleName.$error.required && personForm.middleName.$dirty">Middle Name is Must</span>
+                <span class="help-block" ng-if="personForm.middleName.$error.pattern">Must start from Capital letter</span>
+                <span class="help-block" ng-if="personForm.middleName.$error.maxlength">Must be less than 20 letters</span>
+            </div>
+        </div>
+            
+        <div class="form-group" ng-class="{'has-error':personForm.lastName.$invalid && personForm.lastName.$dirty}">
+            <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="lastName" name="lastName"
+                       ng-model="LastName" class="form-control" ng-required="true"
+                       ng-maxlength="20" ng-pattern="/^[A-Z]/" />
+                <span class="help-block" ng-if="personForm.lastName.$error.required && personForm.lastName.$dirty">Last Name is Must</span>
+                <span class="help-block" ng-if="personForm.lastName.$error.pattern">Must start from Capital letter</span>
+                <span class="help-block" ng-if="personForm.lastName.$error.maxlength">Must be less than 20 letters</span>
+            </div>
+        </div>       
+              
+            <div class="form-group">
+                <label for="gender" class="col-sm-3 control-label">Gender</label>
+                <div class="col-sm-9">
+                    <select id="gender" name="gender" class="form-control"
+                            ng-model="selectedGender"
+                            ng-options="g for g in gender"></select>
+                </div>
+            </div>                  
+
+        <div class="form-group"
+             ng-class="{'has-error':personForm.birthdate.$invalid && personForm.birthdate.$dirty}">
+            <label for="birthdate" class="col-sm-3 control-label">Birth Date</label>
+            <div class="col-sm-9">
+                <!-- <input type="text" id="birthdate" name="birthdate"
+            ng-model="BirthName" class="form-control" />-->
+                <input type="text" class="form-control" name="birthdate" id="birthdate"
+                       datepicker-popup="dd/mm/yyyy"
+                       ng-model="BirthDate" is-open="opened"
+                       close-text="Close" />
+                <span class="help-block" ng-show="personForm.birthdate.$error.required && personForm.birthdate.$dirty">Please Select Date</span>
+            </div>
+        </div>    
+
+     
+                
+    </fieldset>
+    <fieldset>
+        <legend>Address Information :</legend>
+        <div class="form-group"
+             ng-class="{'has-error':personForm.currentaddress.$invalid && personForm.currentaddress.$dirty}">
+            <label for="currentaddress" class="col-sm-3 control-label">Current Address</label>
+            <div class="col-sm-9">
+                <textarea id="currentaddress" name="currentaddress"
+                          ng-model="CurrentAddress" class="form-control" ng-required="true"></textarea>
+                <span class="help-block" ng-show="personForm.currentaddress.$error.required && personForm.currentaddress.$dirty">Address us Must</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="issameaddress" class="col-sm-3 control-label">Check is Same Address:</label>
+            <div class="col-sm-9">
+                <input type="checkbox" id="issameaddress"
+                       name="issameaddress" ng-model="IsSameAddress"
+                       class="form-control"
+                       ng-change="SameAddress()" />
+            </div>
+         </div>
+        <div class="form-group"
+             ng-class="{'has-error':personForm.permanentaddress.$invalid && personForm.permanentaddress.$dirty}">
+            <label for="permanentaddress" class="col-sm-3 control-label">Permanent Address</label>
+            <div class="col-sm-9">
+                <textarea id="permanentaddress" name="permanentaddress"
+                          ng-model="PermanentAddress" class="form-control"
+                          ng-disabled="DisablesPermanentAddress" ng-required="true"></textarea>
+                <span class="help-block" ng-show="personForm.permanentaddress.$error.required && personForm.permanentaddress.$dirty">Address us Must</span>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Professional Information </legend>
+        <div class="form-group">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-9">
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" id="employeed" value="Employeed"
+                               name="jobtype"
+                               ng-model="Occupation" />Employeed
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" id="selfemployeed"
+                               ng-model="Occupation" name="jobtype" value="Self-Employeed" />Self-Employeed
+                    </label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Contact Information</legend>
+        <div class="form-group"
+             ng-class="{'has-error':personForm.email.$invalid && personForm.email.$dirty}">
+
+            <label for="email" class="col-sm-3 control-label">Email</label>
+            <div class="col-sm-9">
+                <input type="email" id="email" name="email"
+                       ng-model="Email" class="form-control" ng-required="true" />
+                <span class="help-block" ng-if="personForm.email.$error.required"></span>
+                <span class="help-block"
+                      ng-if="personForm.email.$dirty && personForm.email.$error.email">valid email required</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':personForm.mobileno.$invalid && personForm.mobileno.$dirty}">
+            <label for="mobileno" class="col-sm-3 control-label">Mobile No.</label>
+            <div class="col-sm-9">
+                <input type="number" id="mobileno" name="mobileno"
+                       ng-model="MobileNo" class="form-control"
+                       ng-minlength="12" ng-pattern="/^[0-9]{1,12}$/" ng-required="true" />
+                <!--<span class="help-block" ng-if="personForm.mobileno.$error.required">Mobile No is Must</span>-->
+                <span class="help-block"
+                      ng-if="personForm.mobileno.$dirty && personForm.mobileno.$error.required">valid mobile no required</span>
+                <span class="help-block" ng-if="personForm.mobileno.$error.pattern">Must be 12 digits</span>
+                <span class="help-block" ng-if="personForm.mobileno.$error.minlength">Must be 12 in length (Country Code)</span>
+                
+            </div>
+        </div>    
+            
+        
+    </fieldset>
+
+    <div class="col-sm-offset-3 col-sm-9">
+        <input type="button" class="btn btn-default" value="Cancel"
+               ng-click="cancelForm()" />
+        <input type="button" class="btn btn-primary" value="Submit"
+               ng-click="submitForm()"  ng-disabled="personForm.$invalid"/>
+    </div>
+
+</form>
